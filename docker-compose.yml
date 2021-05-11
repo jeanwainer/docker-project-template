@@ -3,10 +3,8 @@
   services:
     db:
       image: postgres:12-alpine
-      environment:
-        - POSTGRES_DB=dbuser
-        - POSTGRES_USER=dbpassword
-        - POSTGRES_PASSWORD=project
+      env_file:
+        - ./.env
 # Lines below are optional in case you want to access database from outside the containers
 #      ports:
 #        - "5432:5432"
@@ -43,10 +41,9 @@
         - 8002
       depends_on:
         - web
+      env_file:
+        - ./.env
       environment:
-        - VIRTUAL_HOST=PROJECT.com
-        - LETSENCRYPT_HOST=PROJECT.com
-        - LETSENCRYPT_EMAIL=MYEMAIL@PROJECT.com
         - VIRTUAL_PORT=8002
       networks:
         - default
