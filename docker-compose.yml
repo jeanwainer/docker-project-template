@@ -1,0 +1,65 @@
+  version: '3.7'
+
+  services:
+    db:
+      image: postgres:12-alpine
+      environment:
+        - POSTGRES_DB=dbuser
+        - POSTGRES_USER=dbpassword
+        - POSTGRES_PASSWORD=project
+# Lines below are optional in case you want to access database from outside the containers
+#      ports:
+#        - "5432:5432"
+      expose:
+        - 5432
+      volumes:
+        - postgres_data:/var/lib/postgresql/data/
+      networks:
+        - default
+
+    web:
+      build: .
+      command: gunicorn PROJECT.wsgi:application --bind 0.0.0.0:8001
+      volumes:
+        - static_volume:/app/staticfiles
+        - uploads:/app/media_uploads
+      expose:
+        - 8001
+      depends_on:
+        - db
+      env_file:
+        - ./.env
+      entrypoint:
+        - "./docker-entrypoint.sh"
+      networks:
+        - default
+
+    nginx:
+      build: ./service/nginx
+      volumes:
+        - static_volume:/app/staticfiles
+        - uploads:/app/media_uploads
+      expose:
+        - 8002
+      depends_on:
+        - web
+      environment:
+        - VIRTUAL_HOST=PROJECT.com
+        - LETSENCRYPT_HOST=PROJECT.com
+        - LETSENCRYPT_EMAIL=MYEMAIL@PROJECT.com
+        - VIRTUAL_PORT=8002
+      networks:
+        - default
+        - nginx-gateway
+
+  networks:
+    default:
+    nginx-gateway:
+        external:
+          name: nginx-gateway
+
+  volumes:
+    postgres_data:
+    static_volume:
+    uploads:
+    code:
