@@ -70,3 +70,34 @@ Build and run docker compose
 ```
 docker-compose up -d --build
 ```
+
+
+# TODO:
+- Add memory log limit
+- Acknowledge this article:
+https://luis-sena.medium.com/creating-the-perfect-python-dockerfile-51bdec41f1c8
+- Read this: https://luis-sena.medium.com/gunicorn-worker-types-youre-probably-using-them-wrong-381239e13594
+- Include django and python packages:
+    - python decouple 
+    - django-extensions
+    - sentry-sdk
+    - django-allauth 
+    - django-s3-storage
+    - django-debug-toolbar
+    - Honorable mentions:
+        - Django rest framework
+            - Django cors headers
+            - django-filter
+        - psycopg2-binary
+        - django-autocomplete-light
+        - django-querysetsequence 
+        - sorl-thumbnail
+        - celery, celery beat
+        - zappa (amazon lambda)
+        - black
+    - Non python:
+        - CircleCI config
+    
+
+
+  
