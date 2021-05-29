@@ -18,7 +18,7 @@
         options:
           max-size: "50m"
           max-file: "5"
-          compress: true
+          compress: "true"
 
     web:
       build: .
@@ -41,7 +41,7 @@
         options:
           max-size: "50m"
           max-file: "5"
-          compress: true
+          compress: "true"
 
     nginx:
       build: ./service/nginx
@@ -64,7 +64,7 @@
         options:
           max-size: "50m"
           max-file: "5"
-          compress: true
+          compress: "true"
 
   networks:
     default:
