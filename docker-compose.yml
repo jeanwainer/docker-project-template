@@ -22,7 +22,7 @@
 
     web:
       build: .
-      command: ["gunicorn","-b", "0.0.0.0:8001", "-w", "4", "-k", "gevent", "--worker-tmp-dir", "/dev/shm", "app:app"]
+      command: ["gunicorn","-b", "0.0.0.0:8001", "-w", "2", "-k", "gevent", "--worker-tmp-dir", "/dev/shm", "PROJETO.wsgi:application"]
       volumes:
         - static_volume:/app/staticfiles
         - uploads:/app/media_uploads
