@@ -71,11 +71,14 @@ Build and run docker compose
 docker-compose up -d --build
 ```
 
+## References:
+- https://luis-sena.medium.com/creating-the-perfect-python-dockerfile-51bdec41f1c8
 
 # TODO:
-- Add memory log limit
+- Add memory log limit (@luzfcb at https://github.com/djangopackages/djangopackages/pull/583/files)
 - Acknowledge this article:
 https://luis-sena.medium.com/creating-the-perfect-python-dockerfile-51bdec41f1c8
+- Consider this article: https://betterprogramming.pub/faster-python-in-docker-d1a71a9b9917
 - Read this: https://luis-sena.medium.com/gunicorn-worker-types-youre-probably-using-them-wrong-381239e13594
 - Include django and python packages:
     - python decouple 

@@ -5,19 +5,24 @@
       image: postgres:12-alpine
       env_file:
         - ./.env
-# Lines below are optional in case you want to access database from outside the containers
-#      ports:
-#        - "5432:5432"
+      ports:
+        - "5432:5432"
       expose:
         - 5432
       volumes:
         - postgres_data:/var/lib/postgresql/data/
       networks:
         - default
+      logging:
+        driver: "json-file"
+        options:
+          max-size: "50m"
+          max-file: "5"
+          compress: true
 
     web:
       build: .
-      command: gunicorn PROJECT.wsgi:application --bind 0.0.0.0:8001
+      command: ["gunicorn","-b", "0.0.0.0:8001", "-w", "4", "-k", "gevent", "--worker-tmp-dir", "/dev/shm", "app:app"]
       volumes:
         - static_volume:/app/staticfiles
         - uploads:/app/media_uploads
@@ -31,6 +36,12 @@
         - "./docker-entrypoint.sh"
       networks:
         - default
+      logging:
+        driver: "json-file"
+        options:
+          max-size: "50m"
+          max-file: "5"
+          compress: true
 
     nginx:
       build: ./service/nginx
@@ -48,6 +59,12 @@
       networks:
         - default
         - nginx-gateway
+      logging:
+        driver: "json-file"
+        options:
+          max-size: "50m"
+          max-file: "5"
+          compress: true
 
   networks:
     default:
